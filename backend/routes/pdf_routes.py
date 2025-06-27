@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
-from validation.upload import allowed_file
+from validation import allowed_file
 from Controllers import pdf_to_text,load_gemini_model, prompt, resume_store_data
 from models import db, ResumeData
 
