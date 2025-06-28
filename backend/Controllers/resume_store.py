@@ -22,10 +22,10 @@ Analyze the following resume text and extract key information. Return ONLY a val
     "phone": "phone number",
     "education": "education details",
     "experience": "work experience",
-    "skills": "technical skills",
+    "skills": "technical skills and framwork language",
     "certifications": "certifications if any",
     "projects": "projects if any",
-    "languages": "programming languages or spoken languages",
+    "languages": "spoken languages",
     "additional_info": "any other relevant information"
 }}
 
