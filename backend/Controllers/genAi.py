@@ -48,6 +48,7 @@ def load_gemini_model():
 def prompt(model, *args):
     """
     Generate content using Gemini model with error handling
+    args: variable number of prompt arguments
     """
     try:
         if not model:

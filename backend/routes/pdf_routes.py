@@ -5,8 +5,8 @@ from werkzeug.utils import secure_filename
 
 try:
     from validation import allowed_file
-    from Controllers import pdf_to_text, load_gemini_model, prompt, resume_store_data
-    from models import db, ResumeData
+    from Controllers import pdf_to_text, load_gemini_model, prompt, resume_store_data, generate_cover_letter, generate_ats_score
+    
 except ImportError as e:
     print(f"Import error: {e}")
     raise
@@ -61,6 +61,7 @@ def health_check():
             'error': 'Health check failed'
         }), 500
 
+
 @pdf_bp.route('/pdf-analysis', methods=['POST'])
 def upload_pdf():
     try:
@@ -72,14 +73,14 @@ def upload_pdf():
                 'message': 'Please try again later'
             }), 503
             
-        if 'pdfFile' not in request.files:
+        if 'pdf_file' not in request.files:
             return jsonify({
                 'success': False,
                 'error': 'No file provided',
                 'message': 'No file part in the request'
             }), 400
 
-        file = request.files['pdfFile']
+        file = request.files['pdf_file']
 
         if file.filename == '':
             return jsonify({
@@ -118,7 +119,7 @@ def upload_pdf():
                     }), 500
                 
                 try:
-                    job_description = request.form.get('jobDescription', 'Software Engineer')
+                    job_description = request.form.get('job_description', 'Software Engineer')
                     
                     prompt_text = f"""
 You are an advanced career coach and AI resume expert. Please analyze the resume content provided below and deliver structured, in-depth feedback based on the following dimensions. Your goal is to help improve this resume's effectiveness, clarity, and alignment with industry standards and job expectations.
@@ -165,15 +166,16 @@ You are an advanced career coach and AI resume expert. Please analyze the resume
 
 - Strengths Summary
 - Section-by-Section Analysis
-- ATS Readiness Score (/100)
 - Improvement Recommendations
 - Rewritten Bullet Examples (if applicable)
 - Final Verdict: Ready / Needs Work / Major Revision
 
 Please respond with your full analysis and without any additional text or explanations.
 
-NOTE: If user not provided resume pdf then just response with this "No resume provided for analysis. Please upload a valid PDF resume."
+NOTE: 1.If user not provided resume pdf then just response with this "No resume provided for analysis. Please upload a valid PDF resume."
+2.Use markdown to format your text: # Heading 1, ## Heading 2, ### Heading 3, blank lines for paragraphs, * for bullet lists, 1. 2. for numbered lists, **bold** for bold, *italic* for italics.
 """
+
 
                     response = prompt(model, prompt_text)
                     
@@ -203,6 +205,8 @@ NOTE: If user not provided resume pdf then just response with this "No resume pr
                     return jsonify({
                         'success': True,
                         'message': response,
+                        #temorary
+                        'resume_text': extracted_text,
                         'filename': filename,
                         'metadata': {
                             'text_length': len(extracted_text),
@@ -239,4 +243,106 @@ NOTE: If user not provided resume pdf then just response with this "No resume pr
             'success': False,
             'error': 'Unexpected error occurred',
             'message': 'An unexpected error occurred'
+        }), 500
+
+@pdf_bp.route('/cover_letter', methods=['POST', 'GET'])
+def cover_letter():
+    """
+    Endpoint to generate a cover letter
+    job_description is query parameter
+    resume_text is in request body
+    """
+    if request.method == "POST":
+        try:
+            if not model:
+                return jsonify({
+                    'success': False,
+                    'error': 'AI service temporarily unavailable',
+                    'message': 'Please try again later'
+                }), 503
+            
+
+            resume_text = request.form.get('resume_text')
+            job_description = request.args.get('job_description')
+            company_name = request.args.get('company_name', 'Unknown Company')
+            hiring_manager_name = request.args.get('hiring_manager_name', '')
+            desired_tone = request.args.get('desired_tone', 'Standard professional')
+
+            
+            if not resume_text:
+                return jsonify({
+                    'success': False,
+                    'error': 'No resume text provided',
+                    'message': 'Please provide resume text in the request body'
+                }), 400
+
+            # Generate cover letter using AI model
+            response = generate_cover_letter(model, job_description, resume_text, company_name, hiring_manager_name, desired_tone)
+            
+            if not response:
+                log_error("CoverLetterGeneration", "Empty response from model")
+                return jsonify({
+                    'success': False,
+                    'error': 'Cover letter generation failed',
+                    'message': 'Failed to generate cover letter'
+                }), 500
+            
+            return jsonify({
+                'success': True,
+                'cover_letter': response,
+                'timestamp': datetime.datetime.now().isoformat()
+            }), 200
+
+        except Exception as e:
+            log_error("CoverLetterError", str(e), "cover_letter function")
+            return jsonify({
+                'success': False,
+                'error': 'An unexpected error occurred',
+                'message': 'Failed to generate cover letter',
+            }), 500
+
+@pdf_bp.route('/ats', methods=['POST'])
+def ats_optimization():
+    """
+    Endpoint to optimize resume for ATS
+    """
+    try:
+        if not model:
+            return jsonify({
+                'success': False,
+                'error': 'AI service temporarily unavailable',
+                'message': 'Please try again later'
+            }), 503
+
+        resume_text = request.form.get('resume_text')
+        job_description = request.args.get('job_description', '')
+        print(f"Job Description: {job_description}")
+
+
+        if not resume_text:
+            return jsonify({
+                'success': False,
+                'error': 'No resume text provided',
+                'message': 'Please provide resume text in the request body'
+            }), 400
+
+        score = generate_ats_score(model, resume_text, job_description)
+        if score is None:
+            log_error("ATSScoreGeneration", "Failed to generate ATS score")
+            return jsonify({
+                'success': False,
+                'error': 'ATS score generation failed',
+                'message': 'Failed to generate ATS score'
+            }), 500
+        return jsonify({
+            'success': True,
+            'ats_score': score,
+            'timestamp': datetime.datetime.now().isoformat()
+        }), 200
+    except Exception as e:
+        log_error("ATSOptimizationError", str(e), "ats_optimization function")
+        return jsonify({
+            'success': False,
+            'error': 'An unexpected error occurred',
+            'message': 'Failed to optimize resume for ATS',
         }), 500

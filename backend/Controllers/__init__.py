@@ -21,5 +21,17 @@ except ImportError as e:
     logger.error(f"Failed to import resume_store_data: {e}")
     raise
 
+try:
+    from .cover_letter import generate_cover_letter
+except ImportError as e:
+    logger.error(f"Failed to import generate_cover_letter: {e}")
+    raise
+
+try:
+    from .ats import generate_ats_score
+except ImportError as e:
+    logger.error(f"Failed to import generate_ats_score: {e}")
+    raise
+
 # Export all functions for easy import
-__all__ = ['load_gemini_model', 'prompt', 'pdf_to_text', 'resume_store_data']
+__all__ = ['load_gemini_model', 'prompt', 'pdf_to_text', 'resume_store_data', 'generate_ats_score']

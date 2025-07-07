@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/* // tailwind.config.js
+// module.exports = {
+//   theme: {
+//     extend: {
+//       keyframes: {
+//         shine: {
+//           '0%': { 'background-position': '100%' },
+//           '100%': { 'background-position': '-100%' },
+//         },
+//       },
+//       animation: {
+//         shine: 'shine 5s linear infinite',
+//       },
+//     },
+//   },
+//   plugins: [],
+// }; */
+
+@theam{
+
+
+
+
+
+}
+
+.markdown-tailwind h1 { @apply text-3xl md:text-4xl font-extrabold text-purple-300 mb-6 mt-6; }
+.markdown-tailwind h2 { @apply text-2xl md:text-3xl font-bold text-purple-200 mb-5 mt-5; }
+.markdown-tailwind h3 { @apply text-xl md:text-2xl font-semibold text-purple-100 mb-4 mt-4; }
+.markdown-tailwind p  { @apply text-lg md:text-xl text-gray-100 mb-4; }
+.markdown-tailwind ul { @apply list-disc pl-6 mb-4; }
+.markdown-tailwind ol { @apply list-decimal pl-6 mb-4; }
+.markdown-tailwind li { @apply mb-2; }
+.markdown-tailwind strong { @apply text-pink-400 font-bold; }
+.markdown-tailwind em { @apply text-pink-300 italic; }
