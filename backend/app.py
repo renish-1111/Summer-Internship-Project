@@ -34,9 +34,10 @@ def create_app():
         
         # Configure CORS - allow requests from frontend
         try:
-            frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
-            CORS(app, resources={r"/api/*": {"origins": [frontend_url]}})
-            logger.info(f"CORS configured for frontend URL: {frontend_url}")
+            urls = os.getenv("FRONTEND_URL")
+            urls = urls.split(",") if urls else []
+            CORS(app, resources={r"/api/*": {"origins": urls}})
+            logger.info(f"CORS configured for frontend URLs: {urls}")
         except Exception as e:
             logger.error(f"CORS configuration failed: {e}")
             raise

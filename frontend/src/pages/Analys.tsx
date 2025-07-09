@@ -193,16 +193,16 @@ const Analys = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white pt-24 px-2">
       <SpotlightCard className="w-full max-w-5xl bg-gray-900/80 rounded-2xl shadow-2xl p-8 border border-gray-800">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-8 items-stretch">
           {/* Left: Intro Text */}
-          <div className="h-full flex flex-col justify-center items-center text-center lg:text-left lg:items-start p-8">
+          <div className="h-full flex flex-col justify-center items-center text-center lg:text-left lg:items-start px-2">
             <h1 className="text-3xl md:text-4xl font-extrabold mb-2 text-purple-400 tracking-tight">Resume Analysis</h1>
             <p className="text-gray-300 mb-4 text-lg">
               Upload your resume and the job description to receive a detailed, AI-powered analysis. Our advanced algorithms will help you optimize your application and increase your chances of landing your dream job.
             </p>
           </div>
           {/* Right: Form and Result */}
-          <div className="h-full flex flex-col justify-center p-8">
+          <div className="h-full flex flex-col justify-center py-8 px-2">
             <form
               className="flex flex-col gap-8"
               onSubmit={handleSubmit}

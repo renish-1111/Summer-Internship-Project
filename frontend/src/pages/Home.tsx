@@ -47,14 +47,14 @@ const steps = [
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white pt-32">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white pt-32 ">
       {/* Hero Section */}
       <motion.section
         initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="text-center content-center justify py-30 max-w-6xl mx-auto my-14"
+        viewport={{ once: false, amount: 0.2 }}
+        className="text-center content-center justify py-10 md:py-30 max-w-6xl mx-auto my-4 md:my-14"
       >
         {/* Responsive SplitText: "AI-Powered" on one line, "Resume Analysis" below on mobile */}
         <div className="mb-5">
@@ -62,7 +62,7 @@ const Home = () => {
           <span className="block md:hidden">
             <SplitText
               text="AI-Powered"
-              className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text drop-shadow-lg"
+              className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text drop-shadow-lg "
               delay={50}
               duration={0.6}
               ease="power3.out"

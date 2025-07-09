@@ -11,7 +11,7 @@ def generate_ats_score(model, resume_text: str, job_description : str) -> float 
 
     # Compose the prompt for the AI model
     ats_prompt = f"""
-You are an expert ATS (Applicant Tracking System) simulator and recruitment analyst. Evaluate the given resume against the job description and return an **ATS Match Score** with brief justification.
+You are an expert ATS (Applicant Tracking System) simulator and recruitment analyst. Evaluate the given resume projects,skills,education,experience,work,keyword against the job description and return an **ATS Match Score** with brief justification.
 
 **Goal:** Help the candidate optimize their resume to increase its chances of passing ATS filters and appealing to recruiters.
 
