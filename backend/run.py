@@ -2,6 +2,7 @@ import os
 import logging
 import sys
 from app import create_app
+from gevent.pywsgi import WSGIServer
 
 # Configure logging
 logging.basicConfig(
@@ -29,18 +30,15 @@ def main():
         
         # Get configuration from environment
         debug_mode = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
-        host = os.getenv('FLASK_HOST', '127.0.0.1')
+        host = os.getenv('FLASK_HOST', '0.0.0.0')
         port = int(os.getenv('FLASK_PORT', 5000))
         
         logger.info(f"Starting server on {host}:{port} (debug={debug_mode})")
         
         # Run the application
-        app.run(
-            debug=debug_mode,
-            host=host,
-            port=port,
-            threaded=True
-        )
+        http_server = WSGIServer((host, port), app)
+        http_server.serve_forever()
+
         
     except KeyboardInterrupt:
         logger.info("Application stopped by user")
