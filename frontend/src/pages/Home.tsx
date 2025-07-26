@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import SplitText from "../ui/SplitText.tsx";
 import ShinyText from '../ui/ShinyText.tsx';

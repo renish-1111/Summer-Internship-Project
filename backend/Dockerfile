@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
 
 # Copy requirements and install Python dependencies with uv
 COPY requirements.txt .
-RUN uv pip install --no-cache -r requirements.txt
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # Copy application code
 COPY . .

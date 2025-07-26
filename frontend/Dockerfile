@@ -5,7 +5,8 @@ FROM node:18-alpine AS build
 WORKDIR /app/frontend
 
 # Install dependencies
-COPY package.json package-lock.json ./
+COPY package.json bun.lockb ./
+RUN npm install -g bun
 RUN bun install
 
 # Copy source code and build
@@ -16,7 +17,7 @@ RUN bun run build
 FROM nginx:stable-alpine
 
 # Copy custom NGINX config (optional)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy React build from Stage 1
 COPY --from=build /app/frontend/build /usr/share/nginx/html

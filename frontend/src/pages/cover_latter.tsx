@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SpotlightCard from '../ui/SpotlightCard';
-import { useNavigate, Link } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 
 export default function CoverLatter() {
   const [jobDescription, setJobDescription] = useState('');

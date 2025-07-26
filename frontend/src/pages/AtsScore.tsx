@@ -122,7 +122,6 @@ const AtsScore = () => {
   const [score, setScore] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
 
   const resumeText = localStorage.getItem('resume_text');
   const lastMessage = localStorage.getItem('message');
@@ -157,7 +156,7 @@ const AtsScore = () => {
     setLoading(true);
     setError(null);
     setScore(null);
-    setSubmitted(true);
+    
     const resumeText = localStorage.getItem('resume_text');
     if (!resumeText) {
       setError('Please analyze your resume first on the Analysis page.');

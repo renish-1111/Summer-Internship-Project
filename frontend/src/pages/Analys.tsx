@@ -9,10 +9,10 @@ const Analys = () => {
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [apiData, setApiData] = useState<any>(null);
+  // const [apiData, setApiData] = useState<any>(null);
   const [lastMessage, setLastMessage] = useState<string | null>(null);
   const [lastFileName, setLastFileName] = useState<string | null>(null);
-  const [lastResumeText, setLastResumeText] = useState<string | null>(null);
+  // const [lastResumeText, setLastResumeText] = useState<string | null>(null);
 
   // On mount, load last result and file name from localStorage
   useEffect(() => {
@@ -22,7 +22,7 @@ const Analys = () => {
     if (savedMessage && savedResumeText && savedFileName) {
       setLastMessage(savedMessage);
       setLastFileName(savedFileName);
-      setLastResumeText(savedResumeText);
+      // setLastResumeText(savedResumeText);
     }
   }, []);
 
@@ -62,7 +62,7 @@ const Analys = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setApiData(null);
+    // setApiData(null);
     if (!pdfFile) {
       setError("Please upload a PDF file.");
       setLoading(false);
@@ -75,13 +75,14 @@ const Analys = () => {
       const response = await axios.post("http://localhost:5000/api/pdf-analysis", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      setApiData(response.data);
+      // setApiData(response.data);
       // Store message and file name in localStorage
       localStorage.setItem('message', response.data.message || '');
       localStorage.setItem('last_pdf_filename', pdfFile.name);
       localStorage.setItem('resume_text', response.data.resume_text || '');
       setLastMessage(response.data.message || '');
       setLastFileName(pdfFile.name);
+      // setLastResumeText(response.data.resume_text || '');
     } catch (err: any) {
       setError(err.response?.data?.message || err.message || "An error occurred.");
     } finally {
