@@ -20,7 +20,7 @@ FROM nginx:stable-alpine
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy React build from Stage 1
-COPY --from=build /app/frontend/build /usr/share/nginx/html
+COPY --from=build /app/frontend/dist /usr/share/nginx/html
 
 # Expose port
 EXPOSE 80

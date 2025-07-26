@@ -2,11 +2,12 @@ version: '3.8'
 
 services:
   frontend:
+    container_name: frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3157:80"
+      - "80:80"
     depends_on:
       - backend
     restart: always
@@ -18,13 +19,14 @@ services:
       start_period: 30s
 
   backend:
+    container_name: backend
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
     environment:
-      - FRONTEND_URL= http://localhost:3157,http://localhost:80
+      - FRONTEND_URL= http://20.124.89.94:80,http://localhost,http://20.124.89.94
       - GEMINI_API_KEY=AIzaSyCs-AJvdl5jUmSOgzSTRGfukX-jDhUoBZs
       - DATABASE_URL=sqlite:///site.db
       - FLASK_DEBUG=False
@@ -32,8 +34,10 @@ services:
       - sqlite_data:/app/backend/db
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/check"]
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
       interval: 1m30s
       timeout: 30s
       retries: 5
       start_period: 30s
+volumes:
+  sqlite_data:
