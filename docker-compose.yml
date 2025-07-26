@@ -11,6 +11,8 @@ services:
     depends_on:
       - backend
     restart: always
+    environment:
+      - VITE_API_URL=http://20.124.89.94:5000
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 1m30s

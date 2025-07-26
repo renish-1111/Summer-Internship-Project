@@ -53,8 +53,9 @@ export default function CoverLatter() {
       if (desiredTone) params.append('desired_tone', desiredTone);
       const formData = new FormData();
       formData.append('resume_text', resumeText || '');
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
       const response = await axios.post(
-        `/api/cover_letter?${params.toString()}`,
+        `${backendUrl}/api/cover_letter?${params.toString()}`,
         formData
       );
       if (response.data && response.data.success) {
