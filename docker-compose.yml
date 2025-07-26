@@ -6,7 +6,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "3157:80"
     depends_on:
       - backend
     restart: always
@@ -23,6 +23,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    environment:
+      - FRONTEND_URL= http://localhost:3157,http://localhost:80
+      - GEMINI_API_KEY=AIzaSyCs-AJvdl5jUmSOgzSTRGfukX-jDhUoBZs
+      - DATABASE_URL=sqlite:///site.db
+      - FLASK_DEBUG=False
     volumes:
-      - ./backend/data:/app/data
+      - sqlite_data:/app/backend/db
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/check"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s

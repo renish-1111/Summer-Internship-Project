@@ -55,6 +55,9 @@ def create_app():
         # Import and register blueprints
         try:
             from routes import api_bp, pdf_bp
+            @app.route('/check')
+            def check():
+                return jsonify({"status": "ok"})
             app.register_blueprint(api_bp, url_prefix='/api')
             app.register_blueprint(pdf_bp, url_prefix='/api')
             logger.info("Blueprints registered successfully")
