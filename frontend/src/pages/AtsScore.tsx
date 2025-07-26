@@ -173,7 +173,7 @@ const AtsScore = () => {
       const formData = new FormData();
       formData.append('resume_text', resumeText);
       const res = await axios.post(
-        `http://localhost:5000/api/ats?job_description=${encodeURIComponent(jobDescription)}`,
+        `/api/ats?job_description=${encodeURIComponent(jobDescription)}`,
         formData
       );
       if (res.data && typeof res.data.ats_score === 'number') {

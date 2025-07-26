@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function Demo() {
   const [data, setData] = useState(null);
-  const api = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';  
+  const api = import.meta.env.VITE_API_URL || '/api';  
   useEffect(() => {
     axios.get(`${api}/hello`)
       .then(response => {

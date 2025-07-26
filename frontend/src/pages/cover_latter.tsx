@@ -54,7 +54,7 @@ export default function CoverLatter() {
       const formData = new FormData();
       formData.append('resume_text', resumeText || '');
       const response = await axios.post(
-        `http://localhost:5000/api/cover_letter?${params.toString()}`,
+        `/api/cover_letter?${params.toString()}`,
         formData
       );
       if (response.data && response.data.success) {
