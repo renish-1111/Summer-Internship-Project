@@ -106,15 +106,17 @@ const Home = () => {
           </span>
         </div>
         <p className="text-xl text-gray-300 mb-10 mx-auto max-w-2xl leading-relaxed">
-          <ShinyText text="Transform your resume with advanced AI analysis and get personalized feedback to land your dream job" 
-          disabled={false} 
-          speed={2} 
-          className='custom-class' />
+          <ShinyText text="Transform your resume with advanced AI analysis and get personalized feedback to land your dream job"
+            disabled={false}
+            speed={2}
+            className='custom-class' />
         </p>
         <div className="flex flex-col gap-5 justify-center items-center md:flex-row md:gap-5 md:items-stretch md:justify-center">
-          <button className="bg-purple-600 hover:bg-purple-700 border-2 border-purple-500 text-white px-8 py-4 text-lg rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-purple-500/25">
-            Get Started
-          </button>
+          <Link to="/analys">
+            <button className="bg-purple-600 hover:bg-purple-700 border-2 border-purple-500 text-white px-8 py-4 text-lg rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-purple-500/25">
+              Get Started
+            </button>
+          </Link>
           <Link to="/learn-more">
             <button className="bg-transparent hover:bg-gray-800 border-2 border-gray-600 hover:border-purple-400 text-white px-8 py-4 text-lg rounded-full transition-all duration-300">
               Learn More

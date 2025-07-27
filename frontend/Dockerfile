@@ -17,7 +17,7 @@ RUN bun run build
 FROM nginx:stable-alpine
 
 # Copy custom NGINX config (optional)
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy React build from Stage 1
 COPY --from=build /app/frontend/dist /usr/share/nginx/html

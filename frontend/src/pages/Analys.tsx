@@ -72,8 +72,7 @@ const Analys = () => {
       const formData = new FormData();
       formData.append("pdf_file", pdfFile);
       formData.append("job_description", jobDescription);
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-      const response = await axios.post(`${backendUrl}/api/pdf-analysis`, formData, {
+      const response = await axios.post(`/api/pdf-analysis`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       // setApiData(response.data);
