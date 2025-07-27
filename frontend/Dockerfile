@@ -1,29 +1,39 @@
 # Stage 1: Build the React app
 FROM node:18-alpine AS build
 
-# Set working directory
+# Set the working directory
 WORKDIR /app/frontend
 
-# Install dependencies
+# Copy package.json and the lock file to leverage Docker cache
 COPY package.json bun.lockb ./
+
+# Install bun globally
 RUN npm install -g bun
+
+# Install project dependencies using bun
 RUN bun install
 
-# Copy source code and build
+# Copy the rest of the source code into the container
 COPY . .
+
+# Build the React application for production
 RUN bun run build
 
-# Stage 2: Serve with NGINX
-FROM nginx:stable-alpine
+# Stage 2: Serve the application with a Node.js server
+FROM node:18-alpine
 
-# Copy custom NGINX config (optional)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Set the working directory for the server
+WORKDIR /app
 
-# Copy React build from Stage 1
-COPY --from=build /app/frontend/dist /usr/share/nginx/html
+# Install 'serve', a production-ready static file server
+RUN npm install -g serve
 
-# Expose port
+# Copy the built application from the 'build' stage to the current stage
+COPY --from=build /app/frontend/dist .
+
+# Expose the port that the server will run on
 EXPOSE 80
 
-# Start NGINX
-CMD ["nginx", "-g", "daemon off;"]
+# Command to run the server
+# The '-s' flag handles SPA routing by redirecting all requests to index.html
+CMD ["serve", "-s", ".", "-l", "80"]
