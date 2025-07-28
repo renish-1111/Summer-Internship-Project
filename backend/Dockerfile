@@ -37,5 +37,5 @@ RUN rm -rf /tmp/uv-cache
 # Expose port
 EXPOSE 5000
 
-# Use entrypoint for auto-migration
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ "python" ]
+CMD [ "run.py" ]
