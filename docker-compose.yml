@@ -31,7 +31,7 @@ services:
       - DATABASE_URL=sqlite:///site.db
       - FLASK_DEBUG=False
     volumes:
-      - sqlite_data:/app/backend/db
+      - sqlite_data:/app/backend/instances
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]

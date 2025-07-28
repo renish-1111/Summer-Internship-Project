@@ -21,24 +21,21 @@ RUN uv pip install --system --no-cache -r requirements.txt
 # Copy application code
 COPY . .
 
-# Create uploads directory
-RUN mkdir -p uploads
+# Copy and set entrypoint
+COPY entrypoint.sh /app/backend/entrypoint.sh
+RUN chmod +x /app/backend/entrypoint.sh
 
-# Create instance directory for database
-RUN mkdir -p instance
-
-# Create logs directory
-RUN mkdir -p logs
+# Create necessary directories
+RUN mkdir -p uploads instance logs
 
 # Set proper permissions
 RUN chmod -R 755 uploads instance logs
 
-# Clean up uv cache to reduce image size
+# Clean up uv cache
 RUN rm -rf /tmp/uv-cache
 
 # Expose port
 EXPOSE 5000
 
-# Run the application
-ENTRYPOINT [ "python" ]
-CMD [ "run.py" ]
+# Use entrypoint for auto-migration
+ENTRYPOINT [ "./entrypoint.sh" ]
