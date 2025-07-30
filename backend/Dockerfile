@@ -21,10 +21,6 @@ RUN uv pip install --system --no-cache -r requirements.txt
 # Copy application code
 COPY . .
 
-# Copy and set entrypoint
-COPY entrypoint.sh /app/backend/entrypoint.sh
-RUN chmod +x /app/backend/entrypoint.sh
-
 # Create necessary directories
 RUN mkdir -p uploads instance logs
 

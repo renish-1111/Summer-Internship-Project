@@ -11,6 +11,8 @@ services:
     depends_on:
       - backend
     restart: always
+    environment:
+      - VITE_API_URL=http://20.40.48.31:5000
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 1m30s
@@ -26,7 +28,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - FRONTEND_URL= http://20.124.89.94:80,http://localhost,http://20.124.89.94
+      - FRONTEND_URL= http://20.124.89.94:80,http://localhost,http://20.124.89.94,http://20.40.48.31:80
       - GEMINI_API_KEY=AIzaSyCs-AJvdl5jUmSOgzSTRGfukX-jDhUoBZs
       - DATABASE_URL=sqlite:///site.db
       - FLASK_DEBUG=False
