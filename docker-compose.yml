@@ -6,6 +6,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    environment:
+      - API_URL=http://20.124.89.94:5000
     ports:
       - "80:80"
     depends_on:
