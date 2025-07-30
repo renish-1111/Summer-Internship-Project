@@ -3,11 +3,9 @@ version: '3.8'
 services:
   frontend:
     container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image : renishponkiya/si-front-app:latest
     environment:
-      - API_URL=http://20.124.89.94:5000
+      - VITE_API_URL=http://20.40.48.31:5000
     ports:
       - "80:80"
     depends_on:
@@ -22,6 +20,7 @@ services:
 
   backend:
     container_name: backend
+    image : renishponkiya/si-back-app:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
