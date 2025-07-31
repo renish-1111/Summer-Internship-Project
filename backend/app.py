@@ -58,8 +58,8 @@ def create_app():
             @app.route('/check')
             def check():
                 return jsonify({"status": "ok"})
-            app.register_blueprint(api_bp, url_prefix='/api')
             app.register_blueprint(pdf_bp, url_prefix='/api')
+            app.register_blueprint(api_bp, url_prefix='/api')
             logger.info("Blueprints registered successfully")
         except ImportError as e:
             logger.error(f"Blueprint import failed: {e}")
