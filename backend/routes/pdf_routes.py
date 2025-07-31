@@ -70,14 +70,14 @@ def upload_pdf():
             return jsonify({
                 'success': False,
                 'error': 'AI service temporarily unavailable',
-                'message': 'Please try again later'
+                'output': 'Please try again later'
             }), 503
             
         if 'pdf_file' not in request.files:
             return jsonify({
                 'success': False,
                 'error': 'No file provided',
-                'message': 'No file part in the request'
+                'output': 'No file part in the request'
             }), 400
 
         file = request.files['pdf_file']
@@ -86,7 +86,7 @@ def upload_pdf():
             return jsonify({
                 'success': False,
                 'error': 'No file selected',
-                'message': 'No selected file'
+                'output': 'No selected file'
             }), 400
 
         if file and allowed_file(file.filename):
@@ -108,14 +108,14 @@ def upload_pdf():
                         return jsonify({
                             'success': False,
                             'error': 'Text extraction failed',
-                            'message': 'Failed to extract text from PDF'
+                            'output': 'Failed to extract text from PDF'
                         }), 400
                 except Exception as e:
                     log_error("PDFExtraction", str(e), f"File: {filename}")
                     return jsonify({
                         'success': False,
                         'error': 'PDF processing failed',
-                        'message': 'Error processing PDF file'
+                        'output': 'Error processing PDF file'
                     }), 500
                 
                 try:
@@ -183,14 +183,14 @@ NOTE: 1.If user not provided resume pdf then just response with this "No resume 
                         return jsonify({
                             'success': False,
                             'error': 'No resume provided',
-                            'message': response
+                            'output': response
                         }), 400
                     elif not response:
                         log_error("AIResponse", "Empty response from model", f"File: {filename}")
                         return jsonify({
                             'success': False,
                             'error': 'Analysis generation failed',
-                            'message': 'Failed to generate analysis'
+                            'output': 'Failed to generate analysis'
                         }), 500
                     
                     # Store resume data in the database
@@ -204,7 +204,7 @@ NOTE: 1.If user not provided resume pdf then just response with this "No resume 
                     # Return successful response
                     return jsonify({
                         'success': True,
-                        'message': response,
+                        'output': response,
                         #temorary
                         'resume_text': extracted_text,
                         'filename': filename,
@@ -220,7 +220,7 @@ NOTE: 1.If user not provided resume pdf then just response with this "No resume 
                     return jsonify({
                         'success': False,
                         'error': 'Analysis generation failed',
-                        'message': 'Error generating resume analysis'
+                        'output': 'Error generating resume analysis'
                     }), 500
 
             except Exception as e:
@@ -228,13 +228,13 @@ NOTE: 1.If user not provided resume pdf then just response with this "No resume 
                 return jsonify({
                     'success': False,
                     'error': 'File processing failed',
-                    'message': 'Error processing uploaded file'
+                    'output': 'Error processing uploaded file'
                 }), 500
         else:
             return jsonify({
                 'success': False,
                 'error': 'Invalid file type',
-                'message': 'Invalid file type or no file selected'
+                'output': 'Invalid file type or no file selected'
             }), 400
             
     except Exception as e:
@@ -242,7 +242,7 @@ NOTE: 1.If user not provided resume pdf then just response with this "No resume 
         return jsonify({
             'success': False,
             'error': 'Unexpected error occurred',
-            'message': 'An unexpected error occurred'
+            'output': 'An unexpected error occurred'
         }), 500
 
 @pdf_bp.route('/cover_letter', methods=['POST', 'GET'])
@@ -258,7 +258,7 @@ def cover_letter():
                 return jsonify({
                     'success': False,
                     'error': 'AI service temporarily unavailable',
-                    'message': 'Please try again later'
+                    'output': 'Please try again later'
                 }), 503
             
 
@@ -273,7 +273,7 @@ def cover_letter():
                 return jsonify({
                     'success': False,
                     'error': 'No resume text provided',
-                    'message': 'Please provide resume text in the request body'
+                    'output': 'Please provide resume text in the request body'
                 }), 400
 
             # Generate cover letter using AI model
@@ -284,7 +284,7 @@ def cover_letter():
                 return jsonify({
                     'success': False,
                     'error': 'Cover letter generation failed',
-                    'message': 'Failed to generate cover letter'
+                    'output': 'Failed to generate cover letter'
                 }), 500
             
             return jsonify({
@@ -298,7 +298,7 @@ def cover_letter():
             return jsonify({
                 'success': False,
                 'error': 'An unexpected error occurred',
-                'message': 'Failed to generate cover letter',
+                'output': 'Failed to generate cover letter',
             }), 500
 
 @pdf_bp.route('/ats', methods=['POST'])
@@ -311,7 +311,7 @@ def ats_optimization():
             return jsonify({
                 'success': False,
                 'error': 'AI service temporarily unavailable',
-                'message': 'Please try again later'
+                'output': 'Please try again later'
             }), 503
 
         resume_text = request.form.get('resume_text')
@@ -323,7 +323,7 @@ def ats_optimization():
             return jsonify({
                 'success': False,
                 'error': 'No resume text provided',
-                'message': 'Please provide resume text in the request body'
+                'output': 'Please provide resume text in the request body'
             }), 400
 
         score = generate_ats_score(model, resume_text, job_description)
@@ -332,7 +332,7 @@ def ats_optimization():
             return jsonify({
                 'success': False,
                 'error': 'ATS score generation failed',
-                'message': 'Failed to generate ATS score'
+                'output': 'Failed to generate ATS score'
             }), 500
         return jsonify({
             'success': True,

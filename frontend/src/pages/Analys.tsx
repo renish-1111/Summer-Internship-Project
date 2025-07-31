@@ -77,14 +77,14 @@ const Analys = () => {
       });
       // setApiData(response.data);
       // Store message and file name in localStorage
-      localStorage.setItem('message', response.data.message || '');
+      localStorage.setItem('message', response.data.output || '');
       localStorage.setItem('last_pdf_filename', pdfFile.name);
       localStorage.setItem('resume_text', response.data.resume_text || '');
-      setLastMessage(response.data.message || '');
+      setLastMessage(response.data.output || '');
       setLastFileName(pdfFile.name);
       // setLastResumeText(response.data.resume_text || '');
     } catch (err: any) {
-      setError(err.response?.data?.message || err.message || "An error occurred.");
+      setError(err.response?.data?.output || err.message || "An error occurred.");
     } finally {
       setLoading(false);
     }
