@@ -7,7 +7,7 @@ pipeline {
             steps {
                 script{
                     echo 'Writing application code...'
-                    hello("https://github.com/renish-1111/Summer-Internship-Project.git","main")
+                    clone("https://github.com/renish-1111/Summer-Internship-Project.git","main")
                     echo "Code Cloning Suceesful"
                 }
             }
