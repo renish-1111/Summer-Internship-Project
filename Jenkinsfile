@@ -41,7 +41,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script{
-                    dockerComposeDeploy()
+                    dockerDeploy()
                     echo "Complete"
                 }
             }
