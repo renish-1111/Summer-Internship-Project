@@ -28,7 +28,7 @@ services:
       - "5000:5000"
     environment:
       - FRONTEND_URL= http://20.124.89.94:80,http://localhost,http://20.124.89.94,http://20.40.48.31:80
-      - GEMINI_API_KEY=AIzaSyCs-AJvdl5jUmSOgzSTRGfukX-jDhUoBZs
+      - GEMINI_API_KEY=AIzaSyB1OhCmRgoOZzdy1Pb8ANrs7cRrMioIse4
       - DATABASE_URL=sqlite:///site.db
       - FLASK_DEBUG=False
     volumes:
